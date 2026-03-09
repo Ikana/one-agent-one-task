@@ -1,0 +1,16 @@
+{
+  // Agent id that owns this status record.
+  "agent_id": "coder",
+  // Agent state: idle, busy, error, or offline.
+  "state": "idle",
+  // Current task id, or null when the agent is idle.
+  "current_task_id": null,
+  // ISO 8601 update timestamp in UTC.
+  "updated_at": "2026-03-08T12:04:33Z",
+  // Seconds since the agent started.
+  "uptime_seconds": 1832,
+  // Lifetime count of successfully completed tasks.
+  "tasks_completed": 3,
+  // Most recent error message, or null when healthy.
+  "last_error": null
+}

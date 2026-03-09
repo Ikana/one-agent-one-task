@@ -1,30 +1,63 @@
 # one-agent-one-task
 
-A disciplined multi-agent architecture where exactly one communicator agent talks to the user, all worker agents run in Docker-backed sandboxes, and agents communicate through files — not chat.
+`one-agent-one-task` is a ClawHub skill bundle that scaffolds an OpenClaw workspace with one user-facing communicator and a set of file-coordinated worker agents.
 
-## Principles
+## What it generates
 
-1. **One communicator only** — a single agent owns all user-facing communication
-2. **File-first coordination** — workers exchange structured files through a shared filesystem contract, not conversational APIs
-3. **No agent chat bus** — inter-agent chat is not the data plane
-4. **Strong isolation** — each worker gets its own sandbox, workspace, and limited responsibility
-5. **Boring infrastructure** — prefer well-maintained, officially supported paths
+- A JSON5 gateway config with one communicator and isolated worker agents
+- Agent role files in `agents/<role>/AGENT.md`
+- A coordination contract under `coord/` and `templates/coordination/`
+- Support scripts for Pi bootstrap, smoke testing, and Mac node setup
 
-## Architecture
+## Install
 
-- One OpenClaw Gateway
-- One communicator agent (user-facing)
-- Multiple sandboxed worker agents (planner, researcher, coder, reviewer, runner)
-- Shared coordination directory mounted into sandboxes at `/coord`
+```bash
+# From ClawHub
+clawhub install one-agent-one-task
 
-## Deployment Targets
+# Or from a local checkout
+clawhub install ./one-agent-one-task
+```
 
-- **Primary:** Raspberry Pi 5 Model B (4GB RAM, 4 cores, 64-bit Pi OS Lite)
-- **Optional:** Mac companion node connected to the Pi gateway
+## Usage
 
-## Status
+```bash
+./scripts/scaffold.sh my-project
 
-Early design phase. See [the brief](docs/brief.md) for the full design document.
+./scripts/scaffold.sh my-project \
+  --agents "communicator,planner,coder,reviewer" \
+  --coord-path "$PWD/my-project/coord"
+```
+
+The scaffold creates:
+
+- `config/openclaw.json5`
+- `agents/<role>/AGENT.md`
+- `coord/` inbox, outbox, artifacts, status, locks, and signals directories
+- `scripts/bootstrap-pi.sh`, `scripts/smoke-test.sh`, `scripts/setup-mac-node.sh`
+- `docs/architecture.md`
+
+## Validation
+
+```bash
+./scripts/smoke-test.sh my-project --skip-docker
+```
+
+If Docker is available and the daemon is reachable, omit `--skip-docker` to validate the bind mount from a container as well.
+
+## Deployment
+
+```bash
+sudo my-project/scripts/bootstrap-pi.sh
+my-project/scripts/setup-mac-node.sh <gateway-host> --dry-run
+```
+
+## Documentation
+
+- [Quickstart](specs/001-one-agent-one-task/quickstart.md)
+- [Architecture](docs/architecture.md)
+- [CLI contract](specs/001-one-agent-one-task/contracts/cli-interface.md)
+- [Design brief](docs/brief.md)
 
 ## License
 

@@ -1,0 +1,20 @@
+{
+  // Task identifier from the originating task file.
+  "task_id": "task-001",
+  // Agent id that produced the result.
+  "agent_id": "coder",
+  // ISO 8601 completion timestamp in UTC.
+  "completed_at": "2026-03-08T12:04:32Z",
+  // Result status: success, failure, or partial.
+  "status": "success",
+  // Relative paths inside coord/ for artifacts created by the worker.
+  "output_files": [
+    "artifacts/implementation.patch"
+  ],
+  // Short description of what changed or what was learned.
+  "summary": "Implemented the task and documented the validation outcome.",
+  // Error message when status is failure, otherwise null.
+  "error": null,
+  // Total elapsed execution time in seconds.
+  "duration_seconds": 272
+}

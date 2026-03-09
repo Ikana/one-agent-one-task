@@ -1,0 +1,24 @@
+{
+  // Unique task identifier. Use a UUID or monotonic task id.
+  "id": "task-001",
+  // ISO 8601 creation timestamp in UTC.
+  "created_at": "2026-03-08T12:00:00Z",
+  // Worker agent id that should handle the task.
+  "assigned_to": "coder",
+  // Agent id that created the task.
+  "assigned_by": "communicator",
+  // Priority: low, normal, high, or critical.
+  "priority": "normal",
+  // Human-readable description of the requested work.
+  "description": "Implement the requested change and capture test evidence.",
+  // Relative paths inside coord/ that the worker should inspect first.
+  "input_files": [
+    "artifacts/request.md"
+  ],
+  // Description of what a successful deliverable looks like.
+  "expected_output": "Updated implementation and a short validation summary.",
+  // Maximum allowed execution time for this task.
+  "timeout_seconds": 300,
+  // Lifecycle status: pending, in_progress, completed, failed, cancelled.
+  "status": "pending"
+}

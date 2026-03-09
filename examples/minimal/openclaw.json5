@@ -1,0 +1,85 @@
+{
+  "gateway": {
+    "name": "minimal-example",
+    "logLevel": "info"
+  },
+  "bindings": [
+    {
+      "channel": "telegram",
+      "agentId": "communicator"
+    }
+  ],
+  "coordination": {
+    "hostPath": "/var/lib/minimal-example/coord",
+    "mountPath": "/coord"
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "/workspace"
+    },
+    "list": [
+      {
+        "id": "communicator",
+        "workspace": "/workspace",
+        "agentDir": "/workspace/state/communicator",
+        "roleFile": "/workspace/agents/communicator/AGENT.md",
+        "sandbox": {
+          "mode": "off",
+          "workspaceAccess": "rw"
+        },
+        "tools": {
+          "allow": ["sessions_spawn", "fs.read", "fs.write", "channels.send"],
+          "deny": []
+        }
+      },
+      {
+        "id": "planner",
+        "workspace": "/workspace",
+        "agentDir": "/workspace/state/planner",
+        "roleFile": "/workspace/agents/planner/AGENT.md",
+        "sandbox": {
+          "mode": "non-main",
+          "scope": "agent",
+          "workspaceAccess": "rw",
+          "docker": {
+            "memory": "384m",
+            "cpus": 1,
+            "network": "bridge",
+            "binds": ["/var/lib/minimal-example/coord:/coord:rw"]
+          }
+        },
+        "tools": {
+          "allow": ["fs.read", "fs.write", "sessions_spawn"],
+          "deny": ["channels.send", "message_user"]
+        }
+      },
+      {
+        "id": "coder",
+        "workspace": "/workspace",
+        "agentDir": "/workspace/state/coder",
+        "roleFile": "/workspace/agents/coder/AGENT.md",
+        "sandbox": {
+          "mode": "non-main",
+          "scope": "agent",
+          "workspaceAccess": "rw",
+          "docker": {
+            "memory": "384m",
+            "cpus": 1,
+            "network": "bridge",
+            "binds": ["/var/lib/minimal-example/coord:/coord:rw"]
+          }
+        },
+        "tools": {
+          "allow": ["fs.read", "fs.write", "run.test"],
+          "deny": ["channels.send", "message_user"]
+        }
+      }
+    ]
+  },
+  "providers": {
+    "default": {
+      "provider": "REPLACE_ME",
+      "model": "REPLACE_ME"
+    }
+  }
+}

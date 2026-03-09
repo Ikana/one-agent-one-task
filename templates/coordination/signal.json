@@ -1,0 +1,16 @@
+{
+  // Unique signal identifier.
+  "id": "sig-001",
+  // ISO 8601 creation timestamp in UTC.
+  "created_at": "2026-03-08T12:04:33Z",
+  // Agent id that emitted the signal.
+  "from": "coder",
+  // Agent id that should receive the signal.
+  "to": "communicator",
+  // Allowed reasons: review_artifact, task_blocked, error_escalation, approval_needed.
+  "reason": "review_artifact",
+  // Relative path inside coord/ for the relevant artifact.
+  "path": "artifacts/implementation.patch",
+  // Short human-readable context for the recipient.
+  "message": "Implementation is ready for review."
+}
